@@ -1,11 +1,11 @@
 server:
-  port: 8077
+  port: 8011
 
 spring:
   datasource:
     url: jdbc:mysql://db:3306/lostark_toy?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    username: root
-    password: wjdals12#
+    username: ${DB_USER_NAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -17,14 +17,14 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: your_email@gmail.com
-#    password: your_app_password # Gmail 앱 비밀번호 사용
-#    properties:
-#      mail.smtp.auth: true
-#      mail.smtp.starttls.enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SMTP_USER_NAME}
+    password: ${SMTP_APP_PASS}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
   data:
     redis:
