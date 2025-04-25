@@ -21,13 +21,26 @@ public class ChatRoom {
     @Comment("채팅방 PK")
     private Long ChatRoomId;
 
+    @Column(name = "userId")
+    @Comment("유저PK")
+    private Long userId;
+
+    @Column(name = "targetId")
+    @Comment("타겟PK")
+    private Long targetId;
+
     @Column(name = "account_id")
     @Comment("계정아이디")
     private String accountId;
 
+    @Column(name = "is_group_chat")
+    @Comment("그룹챗 여부")
+    private Boolean isGroupChat;
+
     @Column(name = "room_nm")
     @Comment("방이름")
     private String roomNm;
+
 
     @Column(name = "create_dt")
     @Comment("생성일시")

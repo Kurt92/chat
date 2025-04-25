@@ -23,8 +23,11 @@ public class ChatMsg {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
-    private ChatRoom ChatRoomId;
+    private ChatRoom ChatRoom;
 
+    @Column(name = "user_id")
+    @Comment("유저 ID")
+    private Long userId;
 
     @Column(name = "account_id")
     @Comment("계정 ID")
@@ -33,6 +36,14 @@ public class ChatMsg {
     @Column(name = "content")
     @Comment("내용")
     private String content;
+
+    @Column(name = "is_read")
+    @Comment("읽음 여부")
+    private Boolean isRead;
+
+    @Column(name = "is_last_msg")
+    @Comment("마지막 메시지 여부")
+    private Boolean isLastMsg;
 
     @Column(name = "create_dt")
     @Comment("생성일시")
