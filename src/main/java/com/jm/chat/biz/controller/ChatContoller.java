@@ -3,6 +3,7 @@ package com.jm.chat.biz.controller;
 import com.jm.chat.biz.dto.ChatDto;
 import com.jm.chat.biz.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ChatContoller {
@@ -26,9 +28,11 @@ public class ChatContoller {
     }
 
     @MessageMapping("/chat.sendMessage")
-    public void sendMessage(@Payload ChatDto.Request.ChatMsg msg,
-                            SimpMessageHeaderAccessor headerAccessor) {
+    public void sendMessage(@Payload ChatDto.Request.ChatMsg msg, SimpMessageHeaderAccessor headerAccessor) {
+
+        log.info("📩 받은 메시지: roomId={}, sender={}, message={}", msg.getChatRoomId(), msg.getSender(), msg.getMessage());
         messagingTemplate.convertAndSend("/topic/chat/" + msg.getChatRoomId(), msg);
+
     }
 
 

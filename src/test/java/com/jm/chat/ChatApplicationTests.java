@@ -25,10 +25,10 @@ class ChatApplicationTests {
         List<ChatMsg> messages = chatMsgRepository.findAll();
 
 
-        for (ChatMsg msg : messages) {
-            System.out.println("msg.id = " + msg.getChatId() +
-                    ", room.id = " + msg.getChatRoomId().getChatRoomId());
-        }
+//        for (ChatMsg msg : messages) {
+//            System.out.println("msg.id = " + msg.getChatId() +
+//                    ", room.id = " + msg.getChatRoomId().getChatRoomId());
+//        }
     }
 
 

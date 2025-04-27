@@ -10,7 +10,7 @@ public class ChatDto {
     public static class Request {
         @Getter
         @Setter
-        public class ChatMsg {
+        public static class ChatMsg {
             private String chatRoomId;
             private String sender;
             private String message;
