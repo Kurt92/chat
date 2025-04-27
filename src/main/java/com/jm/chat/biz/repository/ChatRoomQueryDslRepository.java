@@ -26,7 +26,7 @@ public class ChatRoomQueryDslRepository {
                 .select(
                         Projections.fields(
                                 ChatDto.Response.ChatRoomList.class,
-                                chatRoom.ChatRoomId,
+                                chatRoom.chatRoomId,
                                 chatRoom.roomNm,
                                 chatRoom.targetId,
                                 chatMsg.createDt.as("lastMessageTime"),
@@ -36,14 +36,14 @@ public class ChatRoomQueryDslRepository {
                                                 .select(chatMsg.isRead.count())
                                                 .from(chatMsg)
                                                 .where(
-                                                        chatMsg.ChatRoom.eq(chatRoom),
+                                                        chatMsg.chatRoom.eq(chatRoom),
                                                        chatMsg.isRead.eq(false)
                                                 ), "unreadCount"
                                 )
                         )
                 )
                 .from(chatRoom)
-                .innerJoin(chatMsg).on(chatRoom.ChatRoomId.eq(chatMsg.ChatRoom.ChatRoomId))
+                .innerJoin(chatMsg).on(chatRoom.chatRoomId.eq(chatMsg.chatRoom.chatRoomId))
                 .where(
                         chatRoom.userId.eq(userId),
                         chatMsg.isLastMsg.eq(true)

@@ -23,7 +23,7 @@ public class ChatMsg {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
-    private ChatRoom ChatRoom;
+    private ChatRoom chatRoom;
 
     @Column(name = "user_id")
     @Comment("유저 ID")
