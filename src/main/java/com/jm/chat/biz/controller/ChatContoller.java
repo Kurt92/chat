@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatContoller {
 
     private final SimpMessagingTemplate messagingTemplate;
+
     private final ChatService chatService;
 
     @GetMapping("/chat/room-list")
@@ -30,7 +31,12 @@ public class ChatContoller {
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(@Payload ChatDto.Request.ChatMsg msg, SimpMessageHeaderAccessor headerAccessor) {
 
-        log.info("📩 받은 메시지: roomId={}, sender={}, message={}", msg.getChatRoomId(), msg.getSender(), msg.getMessage());
+        log.info("📩 받은 메시지: roomId={}, sender={}, message={}", msg.getChatRoomId(), msg.getSenderId(), msg.getMessage());
+
+//        redisTemplate.convertAndSend("chatQueue", msg); // redis
+
+
+
         messagingTemplate.convertAndSend("/topic/chat/" + msg.getChatRoomId(), msg);
 
     }

@@ -18,9 +18,12 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+
+        // 서버에서 컨트롤러로 메시지를 보낼 때 사용
+        registry.setApplicationDestinationPrefixes("/pub");
+
         // 클라이언트에서 구독(subscribe)할 prefix
         registry.enableSimpleBroker("/topic"); // 메모리 브로커 사용
-        // 서버에서 핸들러(컨트롤러)로 메시지를 보낼 때 사용
-        registry.setApplicationDestinationPrefixes("/pub");
+
     }
 }

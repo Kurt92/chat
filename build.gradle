@@ -54,6 +54,11 @@ dependencies {
     // === QueryDsl end ===
 
 
+    // 카푸카
+    implementation 'org.springframework.kafka:spring-kafka'
+
+
+
     //evn
     implementation("me.paulschwarz:spring-dotenv:3.0.0")
 

@@ -12,7 +12,8 @@ public class ChatDto {
         @Setter
         public static class ChatMsg {
             private Long chatRoomId;
-            private String sender;
+            private Long senderId;
+            private String userName;
             private String message;
         }
 

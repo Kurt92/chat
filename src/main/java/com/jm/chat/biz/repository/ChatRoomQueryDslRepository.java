@@ -45,7 +45,7 @@ public class ChatRoomQueryDslRepository {
                 .from(chatRoom)
                 .innerJoin(chatMsg).on(chatRoom.chatRoomId.eq(chatMsg.chatRoom.chatRoomId))
                 .where(
-                        chatRoom.userId.eq(userId),
+                        chatRoom.userId.eq(userId).or(chatRoom.targetId.eq(userId)),
                         chatMsg.isLastMsg.eq(true)
                 )
                 .fetch();
