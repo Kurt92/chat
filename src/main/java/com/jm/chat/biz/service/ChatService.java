@@ -5,12 +5,11 @@ import com.jm.chat.biz.entity.ChatMsg;
 import com.jm.chat.biz.entity.ChatMsgRepository;
 import com.jm.chat.biz.entity.ChatRoom;
 import com.jm.chat.biz.entity.ChatRoomRepository;
-import com.jm.chat.biz.repository.ChatRoomQueryDslRepository;
+import com.jm.chat.biz.repository.ChatQueryDslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,14 +18,22 @@ public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMsgRepository chatMsgRepository;
-    private final ChatRoomQueryDslRepository chatRoomQueryDslRepository;
+    private final ChatQueryDslRepository chatQueryDslRepository;
 
     public List<ChatDto.Response.ChatRoomList> findChatRoomList(Long userId) {
 
 
-        List<ChatDto.Response.ChatRoomList> chatRooms = chatRoomQueryDslRepository.findChatRoomList(userId);
+        List<ChatDto.Response.ChatRoomList> chatRooms = chatQueryDslRepository.findChatRoomList(userId);
 
         return chatRooms;
+    }
+
+    public List<ChatDto.Response.ChatMsg> findChatList(Long chatRoomId) {
+
+
+        List<ChatDto.Response.ChatMsg> chatMsgs = chatQueryDslRepository.findChatList(chatRoomId);
+
+        return chatMsgs;
     }
 
     public ChatDto.Request.ChatMsg saveMessage(ChatDto.Request.ChatMsg msg) {
@@ -34,6 +41,7 @@ public class ChatService {
         ChatMsg entity = ChatMsg.builder()
                 .chatRoom(ChatRoom.builder().chatRoomId(msg.getChatRoomId()).build())
                 .userId(msg.getSenderId())
+                .accountId(msg.getUserName())
                 .content(msg.getMessage())
                 .createDt(LocalDateTime.now())
                 .build();

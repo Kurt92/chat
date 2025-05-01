@@ -15,7 +15,7 @@ import static com.jm.chat.biz.entity.QChatRoom.chatRoom;
 
 @Repository
 @RequiredArgsConstructor
-public class ChatRoomQueryDslRepository {
+public class ChatQueryDslRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -54,4 +54,27 @@ public class ChatRoomQueryDslRepository {
         return result;
     }
 
+    public List<ChatDto.Response.ChatMsg> findChatList(Long chatRoomId) {
+
+        List<ChatDto.Response.ChatMsg> result = queryFactory
+                .select(
+                        Projections.fields(
+                                ChatDto.Response.ChatMsg.class,
+                                chatMsg.chatId,
+                                chatMsg.chatRoom.chatRoomId,
+                                chatMsg.content.as("message"),
+                                chatMsg.userId.as("senderId"),
+                                chatMsg.accountId.as("userName"),
+                                chatMsg.isRead,
+                                chatMsg.createDt
+                        )
+                )
+                .from(chatMsg)
+                .where(
+                        chatMsg.chatRoom.chatRoomId.eq(chatRoomId)
+                )
+                .fetch();
+
+        return result;
+    }
 }

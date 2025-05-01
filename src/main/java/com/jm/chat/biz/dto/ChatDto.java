@@ -13,6 +13,7 @@ public class ChatDto {
         public static class ChatMsg {
             private Long chatRoomId;
             private Long senderId;
+//            private String accountId;
             private String userName;
             private String message;
         }
@@ -32,6 +33,16 @@ public class ChatDto {
             private String lastMessage;
             private LocalDateTime lastMessageTime;
             private Long unreadCount;
+        }
+
+        @Getter
+        @Setter
+        public static class ChatMsg {
+            private Long chatRoomId;
+            private Long senderId;
+            private String userName;
+            private String message;
+
         }
     }
 }
