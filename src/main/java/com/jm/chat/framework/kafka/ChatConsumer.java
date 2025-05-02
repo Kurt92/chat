@@ -17,8 +17,6 @@ public class ChatConsumer {
 
     @KafkaListener(topics = "chat-topic", containerFactory = "kafkaListenerContainerFactory")
     public void listen(ChatDto.Request.ChatMsg msg) {
-//        log.info("📥 Kafka 메시지 수신: {}", msg);
-
 
         // db인서트
         chatService.saveMessage(msg);

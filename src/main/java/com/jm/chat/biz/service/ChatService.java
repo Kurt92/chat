@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,15 @@ public class ChatService {
         return chatMsgs;
     }
 
-    public ChatDto.Request.ChatMsg saveMessage(ChatDto.Request.ChatMsg msg) {
+    public void saveMessage(ChatDto.Request.ChatMsg msg) {
+
+        Optional<ChatMsg> findLastMsg = chatMsgRepository.findByChatRoom_ChatRoomIdAndIsLastMsgTrue(msg.getChatRoomId());
+
+        findLastMsg.ifPresent(lastMsg -> {
+            lastMsg.setIsLastMsg(false);
+            chatMsgRepository.save(lastMsg);
+        });
+
 
         ChatMsg entity = ChatMsg.builder()
                 .chatRoom(ChatRoom.builder().chatRoomId(msg.getChatRoomId()).build())
@@ -44,12 +53,10 @@ public class ChatService {
                 .accountId(msg.getUserName())
                 .content(msg.getMessage())
                 .createDt(LocalDateTime.now())
+                .isLastMsg(true)
                 .build();
-
-
         chatMsgRepository.save(entity);
 
-        return msg;
     }
 
 
