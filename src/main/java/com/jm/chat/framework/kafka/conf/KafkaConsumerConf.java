@@ -18,7 +18,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConf {
 
-    // application.yml 에서 불러온 bootstrap 서버 정보
+    // application-local.yml 에서 불러온 bootstrap 서버 정보
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
