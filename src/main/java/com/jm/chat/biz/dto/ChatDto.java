@@ -59,6 +59,27 @@ public class ChatDto {
             private Long senderId;
             private String userName;
             private String message;
+            private LocalDateTime createDt;
+
+            @JsonProperty("createDt")
+            public String getFormattedMessageTime() {
+                if (createDt == null)
+                    return null;
+
+                LocalDateTime now = LocalDateTime.now();
+                LocalDate today = now.toLocalDate();
+
+                if (createDt.toLocalDate().isEqual(today)) {
+                    // 오늘
+                    return createDt.format(DateTimeFormatter.ofPattern("HH:mm"));
+                } else if (createDt.getYear() == now.getYear()) {
+                    // 같은 해
+                    return createDt.format(DateTimeFormatter.ofPattern("MM-dd HH:mm"));
+                } else {
+                    // 다른 해
+                    return createDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                }
+            }
 
         }
     }
