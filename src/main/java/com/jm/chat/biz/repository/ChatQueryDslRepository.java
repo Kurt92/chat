@@ -43,10 +43,11 @@ public class ChatQueryDslRepository {
                         )
                 )
                 .from(chatRoom)
-                .innerJoin(chatMsg).on(chatRoom.chatRoomId.eq(chatMsg.chatRoom.chatRoomId))
+                .leftJoin(chatMsg).on(
+                        chatRoom.chatRoomId.eq(chatMsg.chatRoom.chatRoomId),
+                        chatMsg.isLastMsg.eq(true))
                 .where(
-                        chatRoom.userId.eq(userId).or(chatRoom.targetId.eq(userId)),
-                        chatMsg.isLastMsg.eq(true)
+                        chatRoom.userId.eq(userId).or(chatRoom.targetId.eq(userId))
                 )
                 .fetch();
 

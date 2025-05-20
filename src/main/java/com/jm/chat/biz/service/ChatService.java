@@ -6,6 +6,7 @@ import com.jm.chat.biz.entity.ChatMsgRepository;
 import com.jm.chat.biz.entity.ChatRoom;
 import com.jm.chat.biz.entity.ChatRoomRepository;
 import com.jm.chat.biz.repository.ChatQueryDslRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class ChatService {
         return chatMsgs;
     }
 
+    @Transactional
     public void saveMessage(ChatDto.Request.ChatMsg msg) {
 
         Optional<ChatMsg> findLastMsg = chatMsgRepository.findByChatRoom_ChatRoomIdAndIsLastMsgTrue(msg.getChatRoomId());
@@ -59,6 +61,15 @@ public class ChatService {
 
     }
 
+    @Transactional
+    public void createChatRoom(ChatDto.Request.ChatRoomCreate chatRoomCreateDto) {
 
+        ChatRoom entity = ChatRoom.builder()
+                .roomNm(chatRoomCreateDto.getRoomNm())
+                .userId(chatRoomCreateDto.getUserId())
+                .targetId(chatRoomCreateDto.getTargetId())
+                .build();
+        chatRoomRepository.save(entity);
 
+    }
 }
