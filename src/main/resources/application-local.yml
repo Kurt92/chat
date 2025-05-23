@@ -35,7 +35,10 @@ spring:
       secret: ${JWT_SECRET_KEY}
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka-broker:9092
+    consumer:
+      group-id: azit-group
+      auto-offset-reset: earliest
 
 
 logging:
