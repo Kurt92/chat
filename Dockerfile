@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # 3. JAR 파일 복사
-COPY build/libs/*.jar app.jar
+COPY build/libs/chat-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. 환경 변수 설정
 ENV JAVA_OPTS=""
