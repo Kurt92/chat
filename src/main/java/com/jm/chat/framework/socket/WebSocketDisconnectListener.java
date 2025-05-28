@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -22,12 +23,17 @@ public class WebSocketDisconnectListener {
         if (user == null) return;
 
         String userId = user.getName();
+        Set<String> rooms = redisTemplate.opsForSet().members("user:rooms:" + userId);
 
-         for (String roomId : redisTemplate.opsForSet().members("user:rooms:" + userId)) {
-             redisTemplate.opsForSet().remove("topic:chatroom:" + roomId, userId);
-         }
+        if (rooms != null) {
+            for (String roomId : rooms) {
+                redisTemplate.opsForSet().remove("topic:chatroom:" + roomId, userId);
+            }
 
-        // 혹은 TTL로 간단하게 관리할 수도 있음
-        log.info("연결 해제됨: user={}", userId);
+            // user -> room 정보도 같이 삭제
+            redisTemplate.delete("user:rooms:" + userId);
+        }
+
+        log.info("연결 해제됨: user={}, rooms={}", userId, rooms);
     }
 }
