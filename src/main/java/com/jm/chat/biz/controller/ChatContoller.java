@@ -24,19 +24,19 @@ public class ChatContoller {
 
     private final ChatService chatService;
 
-    @GetMapping("/chat/room-list")
+    @GetMapping("/room-list")
     public ResponseEntity<?> findFriendList(@RequestParam Long userId) {
 
         return ResponseEntity.ok(chatService.findChatRoomList(userId));
     }
 
-    @GetMapping("/chat/chat-list")
+    @GetMapping("/chat-list")
     public ResponseEntity<?> findChatList(@RequestParam Long chatRoomId) {
 
         return ResponseEntity.ok(chatService.findChatList(chatRoomId));
     }
 
-    @PostMapping("/chat/room")
+    @PostMapping("/room")
     public ResponseEntity<?> createRoom(@RequestBody ChatDto.Request.ChatRoomCreate chatRoomCreateDto){
         chatService.createChatRoom(chatRoomCreateDto);
         return ResponseEntity.ok("create room success");
